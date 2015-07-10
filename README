@@ -1,0 +1,8 @@
+Howdy,
+
+This depends on python 3+
+and needs the following pip3 modules:
+
+flask
+requests
+beautifulsoup4

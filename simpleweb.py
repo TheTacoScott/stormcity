@@ -43,5 +43,5 @@ def api():
 
 
 if __name__ == "__main__":
-  lib.app.run(debug=True)
+  lib.app.run(host='0.0.0.0', port=5959,debug=True)
   #lib.app.run()
