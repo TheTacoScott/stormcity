@@ -5,3 +5,4 @@ except:
 
 
 work_q = queue.Queue()
+url_handlers = {}

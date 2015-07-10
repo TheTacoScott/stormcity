@@ -4,7 +4,7 @@ import lib.worker
 import signal
 import sys
 import json
-
+from plugins import *
 lib.app = Flask(__name__)
 
 worker = lib.worker.Fetcher()
@@ -23,10 +23,10 @@ signal.signal(signal.SIGINT, properexit)
 def main(name="home"):
   return render_template('index.html',name=name)
 
-@lib.app.route("/api/<name>")
+@lib.app.route("/api/<name>",methods=['POST'])
 def api(name):
-  return_data = {"status":0}
-
+  api_data = request.get_json(force=True)
+  return_data = {"status":0,"query":json.dumps(api_data)}
   return jsonify(**return_data)
 
 
