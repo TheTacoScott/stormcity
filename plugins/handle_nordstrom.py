@@ -15,6 +15,7 @@ def handle(url):
   return_data = {"status":0,"type":0,"data":{}}
   result = re.match("^(?:http)s?://shop.nordstrom.com/([a-zA-Z])/([^\?]*)(.*)",url)
   if result:
+    #category page
     if result.group(1) == "c":
       return_data["type"] = 0
       return_data["data"]["items"] = []
@@ -33,8 +34,19 @@ def handle(url):
           item_details["link"] = x.find("a",class_="title").attrs["href"]
           item_details["imgurl"] = x.find("img").attrs["data-original"]
           return_data["data"]["items"].append(item_details)
+    #product page
     elif result.group(1) == "s":
       return_data["type"] = 1
+      r = requests.get(url,headers=headers)
+      return_data["data"]["statuscode"] = r.status_code
+      soup = BS(r.text, 'html.parser')
+      return_data["data"]["itemnum"] = re.sub("[^0-9]","",soup.find("div",class_="item-number-wrapper").text)
+      return_data["data"]["title"] = soup.find(id="product-title").find("h1").text
+      return_data["data"]["brand"] = soup.find(id="brand-title").find("a").text
+      return_data["data"]["brand-link"] = soup.find(id="brand-title").find("a").get("href")
+      return_data["data"]["price"] = re.sub("[^0-9\.]","",soup.find(class_="item-price").text)
+      return_data["data"]["breadcrumb"] = re.sub("\n","",soup.find(id="breadcrumb-nav").text).split("/")
+   
     else:
       return_data["status"] = 1
       return_data["type"] = -1
