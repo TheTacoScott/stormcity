@@ -22,11 +22,15 @@ def handle(url):
       r = requests.get(url,headers=headers)
       return_data["data"]["statuscode"] = r.status_code
       soup = BS(r.text, 'html.parser')
+      for i in soup.find_all("ul",class_="product-results-pagination"):
+        for x in i.find_all("li",class_="page-next"):
+          return_data["data"]["nexturl"] = x.find("a").get('href')
       for i in soup.find_all(class_="fashion-results"):
         for x in i.find_all(class_="fashion-item"):
           item_details = {}
           item_details["name"] = x.find(id="ada-title").text
           item_details["price"] = x.find(class_="price").text
+          item_details["link"] = x.find("a",class_="title").attrs["href"]
           item_details["imgurl"] = x.find("img").attrs["data-original"]
           return_data["data"]["items"].append(item_details)
     elif result.group(1) == "s":
