@@ -1,9 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>{{ name }}</title>
+  <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.0/css/materialize.min.css">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.0/js/materialize.min.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Simple Web Product Fetcher - {{ name }}</title>
 </head>
 <body>
-{{ name }}
+  <nav class="blue lighten-1" role="navigation">
+    <div class="nav-wrapper container"><a id="logo-container" href="#" class="brand-logo">Product Fetcher - {{ name.title() }}</a></div>
+  </nav>
+
+  <div class="section no-pad-bot" id="index-banner">
+    <div class="container">
+      <br><br>
+      <h1 class="header center blue-text text-darken-1">Fetch a Product URL</h1>
+      <div class="row center">
+        <h5 class="header col s12 light">Enter a url below, click submit and we'll work some magic</h5>
+      </div>
+      <div class="row center">
+         <div class="input-field col s12">
+          <i class="material-icons prefix">info_outline</i>
+          <input id="icon_prefix" type="text" class="validate">
+          <label for="icon_prefix">URL</label>
+        </div>
+      </div>
+      <div class="row center">
+        <button class="btn waves-effect waves-light" type="submit" name="action">Submit</button>
+      </div>
+    </div>
+  </div>
+
+
 </body>
 </html>
