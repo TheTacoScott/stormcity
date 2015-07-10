@@ -2,6 +2,11 @@ import threading
 import time
 import lib
 try:
+  from urlparse import urlparse as urlparse
+except:
+  from urllib.parse import urlparse
+
+try:
   import Queue as queue
 except:
   import queue
@@ -13,10 +18,9 @@ class Fetcher(threading.Thread):
     self.status_lock = threading.Lock()
     self.status = ""
     self.status_time = -1
-    self.purge_time = 120
-    self.results = {}
-    self.results_lock = threading.Lock()
+    self.purge_time = 60
 
+  #shouldn't run in all threads if we ever were to have more than one, should probably be a seperate thread all-to-gether at some point
   def purge_cache(self):
     with self.results_lock:
       for url in self.results:
@@ -27,17 +31,9 @@ class Fetcher(threading.Thread):
   def set_next_purge(self):
     self.next_purge = time.time() + self.purge_time
 
-  def job_update(self,url,data,status):
-    with self.results_lock:
-      results["url"] = (time.time(),data,status)
-
-  def job_status(self,url):
-    with self.results_lock:
-      pass
-
-  def job_results(self,url):
-    with self.results_lock:
-      pass
+  def job_update(self,url,data):
+    with lib.results_lock:
+      lib.results[url] = {"time":time.time(),"data":data}
 
   def set_status(self,text):
     with self.status_lock:
@@ -66,9 +62,16 @@ class Fetcher(threading.Thread):
         self.url_to_process = lib.work_q.get(block=True,timeout=0.25)
       except queue.Empty:
         continue
-
+      
       #process job here
+      parsed_uri = urlparse(self.url_to_process)
+      if parsed_uri.hostname in lib.url_handlers:
+        data = lib.url_handlers[parsed_uri.hostname](self.url_to_process)
+      else:
+        data = lib.url_handlers["GLOBAL"](self.url_to_process)
+
       #add results to job dict
+      self.job_update(self.url_to_process,data)
 
       self.set_status("Fetching:" + self.url_to_process)
       if self.stop.is_set(): break
