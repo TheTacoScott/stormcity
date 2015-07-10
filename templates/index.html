@@ -5,6 +5,8 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.0/css/materialize.min.css">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.0/js/materialize.min.js"></script>
+  <script src="{{url_for('static', filename='main.js')}}"></script>
+  
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Simple Web Product Fetcher - {{ name }}</title>
 </head>
@@ -13,7 +15,7 @@
     <div class="nav-wrapper container"><a id="logo-container" href="#" class="brand-logo">Product Fetcher - {{ name.title() }}</a></div>
   </nav>
 
-  <div class="section no-pad-bot" id="index-banner">
+  <div class="section no-pad-bot" id="fetch">
     <div class="container">
       <br><br>
       <h1 class="header center blue-text text-darken-1">Fetch a Product URL</h1>
@@ -28,7 +30,40 @@
         </div>
       </div>
       <div class="row center">
-        <button class="btn waves-effect waves-light" type="submit" name="action">Submit</button>
+        <button class="btn waves-effect waves-light" id="fetchurl" type="submit" name="action">Submit</button>
+      </div>
+    </div>
+  </div>
+  <div class="section no-pad-bot hide" id="working">
+    <div class="container">
+      <br><br>
+      <h1 class="header center blue-text text-darken-1">Working...</h1>
+      <div class="row center">
+
+      </div>
+      <div class="row center">
+        <h5 class="header col s12 light">One moment please while we fetch that url and parse it</h5>
+      </div>
+      <div class="row center">
+      <div class="col s2">&nbsp</div>
+      <div class="col s8">
+        <div class="progress">
+          <div class="indeterminate"></div>
+        </div>
+      </div>
+      <div class="col s2">&nbsp</div>
+      </div>
+    </div>
+  </div>
+  <div class="section no-pad-bot hide" id="result">
+    <div class="container">
+      <br><br>
+      <h1 class="header center blue-text text-darken-1">Results</h1>
+      <div class="row center">
+
+      </div>
+      <div class="row center">
+        <button class="btn waves-effect waves-light" type="submit" name="action">Parse Another Url</button>
       </div>
     </div>
   </div>
