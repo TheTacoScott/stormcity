@@ -13,16 +13,23 @@ class Fetcher(threading.Thread):
     self.status_lock = threading.Lock()
     self.status = ""
     self.status_time = -1
-    
+    self.purge_time = 120
     self.results = {}
     self.results_lock = threading.Lock()
 
-  def set_next_purge(self):
-    self.next_purge = time.time() + 120
-
-  def job_update(self,url,data):
+  def purge_cache(self):
     with self.results_lock:
-      pass
+      for url in self.results:
+        (thetime,thedata,thestatus) = self.results[url]
+        if time.time() - thetime >= self.purge_time:
+          del self.results[url]
+
+  def set_next_purge(self):
+    self.next_purge = time.time() + self.purge_time
+
+  def job_update(self,url,data,status):
+    with self.results_lock:
+      results["url"] = (time.time(),data,status)
 
   def job_status(self,url):
     with self.results_lock:
@@ -48,11 +55,13 @@ class Fetcher(threading.Thread):
 
       #purged old results
       if time.time() > self.next_purge:
+        self.set_status("Purging Old Cache")
         for key in self.results:
           pass
         self.set_next_purge()
 
       #get a url from the queue to work on 
+      self.set_status("Checking for work...")
       try:
         self.url_to_process = lib.work_q.get(block=True,timeout=0.25)
       except queue.Empty:
