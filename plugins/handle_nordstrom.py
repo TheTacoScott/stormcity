@@ -1,5 +1,9 @@
 import re
-import lib
+import sys
+try:
+  import lib
+except:
+  pass
 import json
 import requests
 from bs4 import BeautifulSoup as BS
@@ -16,7 +20,13 @@ def handle(url):
       return_data["status"] = 1
       return_data["type"] = -1
   
-    return return_data
+  return return_data
 
 
-lib.url_handlers["shop.nordstrom.com"] = handle
+if __name__ == "__main__":
+  print(handle(sys.argv[0]))
+else:
+  try:
+    lib.url_handlers["shop.nordstrom.com"] = handle
+  except:
+    pass
