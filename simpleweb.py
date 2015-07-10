@@ -27,7 +27,6 @@ def main(name="home"):
 def api():
   api_data = request.get_json(force=True)
   return_data = {"status":1}
-
   if "action" in api_data and "param" in api_data:
     if api_data["action"] == "fetch":
       lib.work_q.put(api_data["param"])
@@ -36,6 +35,9 @@ def api():
       with lib.results_lock:
         if api_data["param"] in lib.results:
           return_data["data"] = lib.results[api_data["param"]]
+          return_data["status"] = 0
+        else:
+          return_data["data"] = 0
   
   return jsonify(**return_data)
 

@@ -12,20 +12,20 @@ from bs4 import BeautifulSoup as BS
 
 def handle(url):
   headers = {'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/43.0.2357.130 Safari/537.36'} 
-  return_data = {"status":0,"type":0,"data":{}}
+  return_data = {"plugin": __name__,"status":0,"type":0,"subdata":{}}
   result = re.match("^(?:http)s?://shop.nordstrom.com/([a-zA-Z])/([^\?]*)(.*)",url)
   if result:
     #category page
     if result.group(1) == "c":
       return_data["type"] = 0
-      return_data["data"]["items"] = []
-      return_data["data"]["category"] = result.group(2)
+      return_data["subdata"]["items"] = []
+      return_data["subdata"]["category"] = result.group(2)
       r = requests.get(url,headers=headers)
-      return_data["data"]["statuscode"] = r.status_code
+      return_data["subdata"]["statuscode"] = r.status_code
       soup = BS(r.text, 'html.parser')
       for i in soup.find_all("ul",class_="product-results-pagination"):
         for x in i.find_all("li",class_="page-next"):
-          return_data["data"]["nexturl"] = x.find("a").get('href')
+          return_data["subdata"]["nexturl"] = x.find("a").get('href')
       for i in soup.find_all(class_="fashion-results"):
         for x in i.find_all(class_="fashion-item"):
           item_details = {}
@@ -33,19 +33,19 @@ def handle(url):
           item_details["price"] = x.find(class_="price").text
           item_details["link"] = x.find("a",class_="title").attrs["href"]
           item_details["imgurl"] = x.find("img").attrs["data-original"]
-          return_data["data"]["items"].append(item_details)
+          return_data["subdata"]["items"].append(item_details)
     #product page
     elif result.group(1) == "s":
       return_data["type"] = 1
       r = requests.get(url,headers=headers)
-      return_data["data"]["statuscode"] = r.status_code
+      return_data["subdata"]["statuscode"] = r.status_code
       soup = BS(r.text, 'html.parser')
-      return_data["data"]["itemnum"] = re.sub("[^0-9]","",soup.find("div",class_="item-number-wrapper").text)
-      return_data["data"]["title"] = soup.find(id="product-title").find("h1").text
-      return_data["data"]["brand"] = soup.find(id="brand-title").find("a").text
-      return_data["data"]["brand-link"] = soup.find(id="brand-title").find("a").get("href")
-      return_data["data"]["price"] = re.sub("[^0-9\.]","",soup.find(class_="item-price").text)
-      return_data["data"]["breadcrumb"] = re.sub("\n","",soup.find(id="breadcrumb-nav").text).split("/")
+      return_data["subdata"]["itemnum"] = re.sub("[^0-9]","",soup.find("div",class_="item-number-wrapper").text)
+      return_data["subdata"]["title"] = soup.find(id="product-title").find("h1").text
+      return_data["subdata"]["brand"] = soup.find(id="brand-title").find("a").text
+      return_data["subdata"]["brand-link"] = soup.find(id="brand-title").find("a").get("href")
+      return_data["subdata"]["price"] = re.sub("[^0-9\.]","",soup.find(class_="item-price").text)
+      return_data["subdata"]["breadcrumb"] = re.sub("\n","",soup.find(id="breadcrumb-nav").text).split("/")
    
     else:
       return_data["status"] = 1

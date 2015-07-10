@@ -22,11 +22,14 @@ class Fetcher(threading.Thread):
 
   #shouldn't run in all threads if we ever were to have more than one, should probably be a seperate thread all-to-gether at some point
   def purge_cache(self):
-    with self.results_lock:
-      for url in self.results:
-        (thetime,thedata,thestatus) = self.results[url]
+    with lib.results_lock:
+      to_delete = []
+      for url in lib.results:
+        thetime = lib.results[url]["time"]
         if time.time() - thetime >= self.purge_time:
-          del self.results[url]
+          to_delete.append(url)
+      for key in to_delete:
+        del lib.results[key]
 
   def set_next_purge(self):
     self.next_purge = time.time() + self.purge_time
@@ -52,8 +55,7 @@ class Fetcher(threading.Thread):
       #purged old results
       if time.time() > self.next_purge:
         self.set_status("Purging Old Cache")
-        for key in self.results:
-          pass
+        self.purge_cache()
         self.set_next_purge()
 
       #get a url from the queue to work on 
