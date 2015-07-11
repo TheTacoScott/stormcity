@@ -34,6 +34,8 @@ def handle(url):
           item_details["link"] = x.find("a",class_="title").attrs["href"]
           item_details["imgurl"] = x.find("img").attrs["data-original"]
           return_data["subdata"]["items"].append(item_details)
+
+      #these items appear to be post document ready js items. I'd have to either interpret the js or do a selenium/phantomjs thing to get the proper html here
       for i in soup.find_all(id="main-content"):
         for x in i.find_all(class_="product-item"):
           item_details = {}
