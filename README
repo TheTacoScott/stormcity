@@ -5,7 +5,8 @@ This depends on python 3+ and needs the following pip3 modules:
 flask
 requests
 beautifulsoup4
-selenium
+selenium (optional but it will improve extraction where there is no predefined plugin)
 
-It also needs phantomjs installed, it can be found in some linux dist repos or compiled from source here:
+non-python packages:
+phantomjs (optional but it will improve extraction where there is no predefined plugin) it can be found in some linux dist repos or compiled from source here:
 http://phantomjs.org/download.html
