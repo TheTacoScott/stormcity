@@ -1,5 +1,10 @@
-Howdy,
+#Howdy
+Thanks for taking the time to look at this program!
 
+#Issues
+Doesn't have robust error handling for all the various timeouts or page rendeirng issues that could occur. It feels like that is out of scope for this assignment other than the assignment should generally work.
+
+#Dependencies
 This depends on python 3+ and needs the following pip3 modules:
 
 flask
@@ -12,6 +17,7 @@ phantomjs (optional but it will improve extraction where there is no predefined 
 http://phantomjs.org/download.html
 
 
+#Example Usage:
 example urls (with nordstrom plugin):
 
 category:
