@@ -55,7 +55,7 @@ def handle(url):
       return_data["subdata"]["brand"] = soup.find(id="brand-title").find("a").text
       return_data["subdata"]["brand-link"] = soup.find(id="brand-title").find("a").get("href")
       return_data["subdata"]["price"] = re.sub("[^0-9\.]","",soup.find(class_="item-price").text)
-      if soup.find(class_="sale-price").text:
+      if soup.find(class_="sale-price"):
         return_data["subdata"]["price"] = re.sub("[^0-9\.]","",soup.find(class_="sale-price").text)
       return_data["subdata"]["breadcrumb"] = re.sub("\n","",soup.find(id="breadcrumb-nav").text).split("/")
    
