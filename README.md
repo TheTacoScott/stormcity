@@ -30,15 +30,15 @@ example urls (with best guess global plugin / only does category pages for now):
 #TODO
 * General error handling
 * The GLOBAL plugin could do FAR more
-  *  Currently all it does is load the url requested to be fetched
-  *  Waits for page to render
-  *  Iterates though all links that contain an img (via xpath)
-    *  Saves some info about these elements (element id, left,top,width,height, ceneter of element x/y and pixel/area count and it's url)
-    *  If that a area is greater than 3% of the screen it then considers it an important link/img and adds it to a list
-  *  Iterates though all text elements that contain a $
-    * grabs similar info and this time checks to make sure the element size is less than 3%
-  *  Iterates through all links that contian an image and finds the closest (pixel distance) element center that contain what appeared to be a dollar amount.
-  *  Returns all that info
+  *  Plugin could run as a seperte process/many processes and listen to requests on a mq and service them async. This would speed up things what with all the spinning up time a headless webkit browser takes.
+  *  Currently all it does is load the url requested to be fetched and then Waits for page to render
+   *  Iterates though all links that contain an img (via xpath)
+     *  Saves some info about these elements (element id, left,top,width,height, ceneter of element x/y and pixel/area count and it's url)
+     *  If that a area is greater than 3% of the screen it then considers it an important link/img and adds it to a list
+   *  Iterates though all text elements that contain a $
+     * grabs similar info and this time checks to make sure the element size is less than 3%
+   *  Iterates through all links that contian an image and finds the closest (pixel distance) element center that contain what appeared to be a dollar amount.
+   *  Returns all that info
   *  This plugin could be far improved in any number of ways
     *  I would say it "happens" to work in sites like jcrew because jcrew has a tags with a child img tag. The xpath could be cleaned up to include all a tags with an img descendent but I but this could get wonky.
     *  To catch the difference between a category page and a product page it could see if there are a "grid" of img/a tags that share similar or exact left and tops. If an element shares it's left and top tag with other >x% screen size elements we can start to infer we're looking at a grid of data.
