@@ -1,8 +1,11 @@
 Howdy,
 
-This depends on python 3+
-and needs the following pip3 modules:
+This depends on python 3+ and needs the following pip3 modules:
 
 flask
 requests
 beautifulsoup4
+selenium
+
+It also needs phantomjs installed, it can be found in some linux dist repos or compiled from source here:
+http://phantomjs.org/download.html
