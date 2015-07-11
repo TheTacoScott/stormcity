@@ -14,6 +14,13 @@ non-python packages:
 
 
 #Example Usage:
+run program like so:
+```
+python3 simpleweb.py
+```
+
+Then point your browser to the host running the web interface to http://hostname:5959/
+
 example urls (with nordstrom plugin):
 
 category:
