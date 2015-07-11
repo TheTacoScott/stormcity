@@ -34,6 +34,14 @@ def handle(url):
           item_details["link"] = x.find("a",class_="title").attrs["href"]
           item_details["imgurl"] = x.find("img").attrs["data-original"]
           return_data["subdata"]["items"].append(item_details)
+      for i in soup.find_all(id="main-content"):
+        for x in i.find_all(class_="product-item"):
+          item_details = {}
+          item_details["name"] = x.find(class_="product-href").text
+          item_details["price"] = x.find(class_="price").text
+          item_details["link"] = x.find("a",class_="title").attrs["href"]
+          item_details["imgurl"] = x.find("img").attrs["data-original"]
+          return_data["subdata"]["items"].append(item_details)
     #product page
     elif result.group(1) == "s":
       return_data["type"] = 1
@@ -45,6 +53,8 @@ def handle(url):
       return_data["subdata"]["brand"] = soup.find(id="brand-title").find("a").text
       return_data["subdata"]["brand-link"] = soup.find(id="brand-title").find("a").get("href")
       return_data["subdata"]["price"] = re.sub("[^0-9\.]","",soup.find(class_="item-price").text)
+      if soup.find(class_="sale-price").text:
+        return_data["subdata"]["price"] = re.sub("[^0-9\.]","",soup.find(class_="sale-price").text)
       return_data["subdata"]["breadcrumb"] = re.sub("\n","",soup.find(id="breadcrumb-nav").text).split("/")
    
     else:
