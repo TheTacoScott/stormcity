@@ -17,15 +17,15 @@ non-python packages:
 example urls (with nordstrom plugin):
 
 category:
-http://shop.nordstrom.com/c/mens-polo-shirts?dept=8000001&origin=topnav
-http://shop.nordstrom.com/c/diaper-bag?dept=8000001&origin=topnav
+* http://shop.nordstrom.com/c/mens-polo-shirts?dept=8000001&origin=topnav
+* http://shop.nordstrom.com/c/diaper-bag?dept=8000001&origin=topnav
 
 product:
-http://shop.nordstrom.com/s/charles-by-charles-david-pact-pump/4111984?origin=category
-http://shop.nordstrom.com/s/cupcakes-and-cashmere-santa-ana-pleated-skirt/4097152?origin=category
+* http://shop.nordstrom.com/s/charles-by-charles-david-pact-pump/4111984?origin=category
+* http://shop.nordstrom.com/s/cupcakes-and-cashmere-santa-ana-pleated-skirt/4097152?origin=category
 
 example urls (with best guess global plugin / only does category pages for now):
-https://www.jcrew.com/girls_category/dresses.jsp
+* https://www.jcrew.com/girls_category/dresses.jsp
 
 #TODO
 * General error handling
